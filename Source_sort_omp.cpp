@@ -61,6 +61,7 @@ void mergeSort(std::vector<int>& array, int left, int right) {
 }
 
 int main() {
+    setlocale(LC_ALL, "Russian");
     const int size = 1000;
     std::vector<int> array(size);
     std::random_device rd;
