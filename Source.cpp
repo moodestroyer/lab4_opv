@@ -1,60 +1,44 @@
 #include <iostream>
+#include <random>
 #include <omp.h>
-#include <algorithm>
-#include <mutex>
 
 int main() {
-    int k, N;
-    std::cout << "Num of threads: ";
-    std::cin >> k;
-    std::cout << "Value of N: ";
-    std::cin >> N;
+    setlocale(LC_ALL, "Russian");
+    int num_points = 10000000; 
+    int num_inside_circle = 0;
+    int num_threads = 4;
 
-    int* numbers = new int[N];
-    for (int i = 0; i < N; ++i) {
-        numbers[i] = i + 1;
-    }
+    double start_time = omp_get_wtime(); 
 
-    int actualThreads = std::min(k, N);
-
-    int* results = new int[actualThreads];
-    int totalSum = 0;
-
-    std::mutex outputMutex;
-
-#pragma omp parallel num_threads(actualThreads) reduction(+:totalSum)
+    #pragma omp parallel num_threads(num_threads)
     {
-        int rank = omp_get_thread_num();
-        int sum = 0;
+        unsigned int seed = omp_get_thread_num();
+        std::mt19937 rng(seed);
+        std::uniform_real_distribution<double> dist(0, 1);
 
-#pragma omp for schedule(static) 
-        for (int i = 0; i < N; ++i) {
-            sum += numbers[i];
-        }
+        int local_inside_circle = 0;
 
-#pragma omp critical
-        {
-            results[rank] = sum;
-        }
-
-#pragma omp barrier 
-
-#pragma omp master
-        {
-            std::sort(results, results + actualThreads);
-
-            for (int i = 0; i < actualThreads; ++i) {
-                std::lock_guard<std::mutex> lock(outputMutex);
-                std::cout << "[" << i << "]: Sum = " << results[i] << std::endl;
-                totalSum += results[i];
+        #pragma omp for
+        for (int i = 0; i < num_points; i++) {
+            double x = dist(rng);
+            double y = dist(rng);
+            if (x * x + y * y <= 1.0 * 1.0) {
+                local_inside_circle++;
             }
-
-            std::cout << "Sum = " << totalSum << std::endl;
         }
+
+        #pragma omp atomic
+        num_inside_circle += local_inside_circle;
     }
 
-    delete[] numbers;
-    delete[] results;
+    double end_time = omp_get_wtime(); 
+
+    double pi = 4.0 * num_inside_circle / num_points;
+
+    std::cout << "Потоки = " << num_threads << std::endl;
+    std::cout << "Точки = " << num_points << std::endl;
+    std::cout << "Число Пи = " << pi << std::endl;
+    std::cout << "Сколько времени заняло: " << end_time - start_time << " секунд" << std::endl; 
 
     return 0;
 }
