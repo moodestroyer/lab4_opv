@@ -18,11 +18,12 @@
 
 1. Сортировка 1000 элементов слиянием с OMP
 
-![image](https://github.com/moodestroyer/lab4_opv/assets/82328325/2868e658-9ca8-49d3-a715-3994750f8990)
+![image](https://github.com/moodestroyer/lab4_opv/assets/82328325/b3826aa5-7da2-423c-8d80-98d96fea0b7c)
 
 2. Сортировка 1000 элементов слиянием без OMP
 
-![image](https://github.com/moodestroyer/lab4_opv/assets/82328325/5e75ec99-989d-4e11-8fd3-01604997bb93)
+![image](https://github.com/moodestroyer/lab4_opv/assets/82328325/3dca4702-1260-4a25-8439-0802fd076dc1)
+
 
 # Реализация вычисления суммы элементов массива чисел с OMP и без
 
