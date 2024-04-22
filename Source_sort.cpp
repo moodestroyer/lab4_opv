@@ -63,7 +63,7 @@ int main() {
         array[i] = dis(gen);
     }
 
-    std::cout << "Original array: ";
+    std::cout << "Неотсортированный массив: ";
     for (int i = 0; i < size; ++i)
         std::cout << array[i] << " ";
     std::cout << std::endl;
@@ -72,12 +72,12 @@ int main() {
     mergeSort(array, 0, size - 1);
     double end_time = omp_get_wtime();
 
-    std::cout << "Sorted array: ";
+    std::cout << "Отсортированный массив: ";
     for (int i = 0; i < size; ++i)
         std::cout << array[i] << " ";
     std::cout << std::endl;
 
-    std::cout << "Time taken: " << end_time - start_time << " seconds" << std::endl;
+    std::cout << "Сколько времени заняло: " << end_time - start_time << " секунд" << std::endl;
 
     return 0;
 }
