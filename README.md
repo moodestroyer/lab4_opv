@@ -26,5 +26,6 @@
 
 # Реализация вычисления суммы элементов массива чисел с OMP и без
 
+![image](https://github.com/moodestroyer/lab4_opv/assets/82328325/4cf458f0-e13f-4ec8-a314-b9ea220cb5c4)
 
 
